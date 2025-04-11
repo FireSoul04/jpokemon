@@ -22,7 +22,17 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
             @Override
             public void update(final double dt) {
                 this.velocity = movingCriteria.apply(dt);
-                this.position = this.velocity.multiply(dt);
+                this.position = this.position.add(this.velocity.multiply(dt));
+            }
+
+            @Override
+            public Vector2 getPosition() {
+                return this.position;
+            }
+
+            @Override
+            public Vector2 getSpeed() {
+                return this.speed;
             }
         };
     }

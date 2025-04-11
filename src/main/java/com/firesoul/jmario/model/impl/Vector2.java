@@ -8,6 +8,13 @@ public record Vector2(double x, double y) {
     public static Vector2 zero() {
         return new Vector2(0.0, 0.0);
     }
+    
+    /**
+     * @return a vector with all zeros as coordinates
+     */
+    public static Vector2 one() {
+        return new Vector2(1.0, 1.0);
+    }
 
     /**
      * @param a

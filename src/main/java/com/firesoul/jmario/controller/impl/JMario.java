@@ -1,8 +1,12 @@
 package com.firesoul.jmario.controller.impl;
 
 import com.firesoul.jmario.controller.api.Game;
-import com.firesoul.jmario.view.api.Window;
-import com.firesoul.jmario.view.impl.WindowImpl;
+import com.firesoul.jmario.model.api.GameObject;
+import com.firesoul.jmario.model.api.GameObjectFactory;
+import com.firesoul.jmario.model.impl.GameObjectFactoryImpl;
+import com.firesoul.jmario.model.impl.Vector2;
+import com.firesoul.jmario.view.api.Renderer;
+import com.firesoul.jmario.view.impl.RendererImpl;
 
 public class JMario implements Game, Runnable {
 
@@ -14,16 +18,19 @@ public class JMario implements Game, Runnable {
 
     private static final double MAX_UPDATES = 60.0;
 
-    private final Window window = new WindowImpl("JMario");
+    private final Renderer window = new RendererImpl("JPokemon");
     private GameState state = GameState.MENU;
 
+    GameObjectFactory gf = new GameObjectFactoryImpl();
+    GameObject player;
+
     public JMario() {
-        
+        player = gf.movingGameObject(Vector2.one().multiply(20), Vector2.one(), dt -> new Vector2(1.0, 0.0).multiply(dt));
     }
 
     @Override
     public void run() {
-        this.window.open(800, 600);
+        this.window.open(480, 320);
         final double ns = 1.0E9 / MAX_UPDATES;
         double dt = 0.0;
         long lastFrame = System.nanoTime();
@@ -52,12 +59,12 @@ public class JMario implements Game, Runnable {
 
     @Override
     public void update(final double dt) {
-        
+        player.update(dt);
     }
 
     @Override
     public void render() {
-
+        window.draw(player);
     }
 
     @Override
