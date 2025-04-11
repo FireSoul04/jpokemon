@@ -1,1 +1,1 @@
-# java-mario
+# Pokemon clone in java
