@@ -1,6 +1,8 @@
-package com.firesoul.jmario.view.api;
+package com.firesoul.jpokemon.view.api;
 
-import com.firesoul.jmario.model.api.GameObject;
+import java.util.List;
+
+import com.firesoul.jpokemon.model.api.GameObject;
 
 public interface Renderer {
     
@@ -21,5 +23,5 @@ public interface Renderer {
 
     int getHeight();
 
-    void draw(GameObject player);
+    void draw(List<GameObject> gameObjects);
 }

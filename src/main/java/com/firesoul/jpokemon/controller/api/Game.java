@@ -1,4 +1,6 @@
-package com.firesoul.jmario.controller.api;
+package com.firesoul.jpokemon.controller.api;
+
+import com.firesoul.jpokemon.model.api.Room;
 
 public interface Game {
 
@@ -17,6 +19,11 @@ public interface Game {
      * What to render every 60 frame
      */
     void render();
+
+    /**
+     * @return the current room in the game
+     */
+    Room getCurrentRoom();
 
     /**
      * @return if the game state is running

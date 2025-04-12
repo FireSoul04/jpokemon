@@ -1,15 +1,17 @@
-package com.firesoul.jmario.controller.impl;
+package com.firesoul.jpokemon.controller.impl;
 
-import com.firesoul.jmario.controller.api.Game;
-import com.firesoul.jmario.model.api.GameObject;
-import com.firesoul.jmario.model.api.GameObjectFactory;
-import com.firesoul.jmario.model.impl.GameObjectFactoryImpl;
-import com.firesoul.jmario.model.impl.Vector2;
-import com.firesoul.jmario.view.api.Renderer;
-import com.firesoul.jmario.view.impl.KeyHandler;
-import com.firesoul.jmario.view.impl.RendererImpl;
+import com.firesoul.jpokemon.controller.api.Game;
+import com.firesoul.jpokemon.model.api.GameObject;
+import com.firesoul.jpokemon.model.api.GameObjectFactory;
+import com.firesoul.jpokemon.model.api.Room;
+import com.firesoul.jpokemon.model.impl.GameObjectFactoryImpl;
+import com.firesoul.jpokemon.model.impl.RoomImpl;
+import com.firesoul.jpokemon.model.impl.Vector2;
+import com.firesoul.jpokemon.view.api.Renderer;
+import com.firesoul.jpokemon.view.impl.KeyHandler;
+import com.firesoul.jpokemon.view.impl.RendererImpl;
 
-public class JMario implements Game, Runnable {
+public class JPokemon implements Game, Runnable {
 
     private enum GameState {
         RUNNING,
@@ -20,14 +22,17 @@ public class JMario implements Game, Runnable {
     private static final double MAX_UPDATES = 60.0;
 
     private final KeyHandler keyHandler = new KeyHandler();
-    private final Renderer window = new RendererImpl("JPokemon", this.keyHandler);
+    private final Renderer window = new RendererImpl("JPokemon", this.keyHandler, this);
+    private final Room room;
     private GameState state = GameState.MENU;
 
-    GameObjectFactory gf = new GameObjectFactoryImpl();
-    GameObject player;
-
-    public JMario() {
-        this.player = this.gf.player(Vector2.one().multiply(20), Vector2.one(), keyHandler);
+    public JPokemon() {
+        final GameObjectFactory gf = new GameObjectFactoryImpl();
+        final GameObject player = gf.player(Vector2.one().multiply(20.0), 1.0, this.keyHandler);
+        this.room = new RoomImpl(player);
+        this.room.addGameObject(player);
+        this.room.addGameObject(gf.staticGameObject(Vector2.one().multiply(80.0)));
+        
         this.window.open(480, 320);
     }
 
@@ -45,10 +50,15 @@ public class JMario implements Game, Runnable {
             lastFrame = now;
             while (dt >= 1.0) {
                 this.update(dt);
-                updates++;
                 dt--;
+
+                // DEBUG PURPOSE
+                updates++;
+                // DEBUG PURPOSE
             }
             this.render();
+
+            // DEBUG PURPOSE
             frames++;
             if (System.currentTimeMillis() - frameTime >= 1000.0) {
                 System.out.println("frames: " + frames + ", updates:" + updates);
@@ -56,17 +66,23 @@ public class JMario implements Game, Runnable {
                 updates = 0;
                 frameTime = System.currentTimeMillis();
             }
+            // DEBUG PURPOSE
         }
     }
 
     @Override
     public void update(final double dt) {
-        player.update(dt);
+        this.room.update(dt);
     }
 
     @Override
     public void render() {
-        window.draw(player);
+        this.window.draw(this.room.getGameObjects());
+    }
+
+    @Override
+    public Room getCurrentRoom() {
+        return this.room;
     }
 
     @Override

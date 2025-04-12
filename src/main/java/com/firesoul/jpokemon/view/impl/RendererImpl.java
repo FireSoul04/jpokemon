@@ -1,7 +1,12 @@
-package com.firesoul.jmario.view.impl;
+package com.firesoul.jpokemon.view.impl;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.firesoul.jpokemon.controller.api.Game;
+import com.firesoul.jpokemon.model.api.GameObject;
+import com.firesoul.jpokemon.model.api.Room;
+import com.firesoul.jpokemon.view.api.Renderer;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,39 +15,40 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
-import com.firesoul.jmario.model.api.GameObject;
-import com.firesoul.jmario.view.api.Renderer;
+import java.util.List;
 
 public class RendererImpl extends JPanel implements Renderer {
 
-    private static final int MAP_WIDTH = 50;
-    private static final int MAP_HEIGHT = 50;
-
+    private final Game game;
     private JFrame window;
     private int startWidth;
     private int startHeight;
     private double scaleX;
     private double scaleY;
 
-    GameObject pl = null;
-
-    public RendererImpl(final String title, final KeyHandler keyHandler) {
+    public RendererImpl(final String title, final KeyHandler keyHandler, final Game game) {
         this.window = new JFrame(title);
         this.window.addKeyListener(keyHandler.getKeyListener());
+        this.game = game;
 
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.scaleX = screenSize.getWidth() / 10000.0 * 9.0;
-        this.scaleY = screenSize.getHeight() / 10000.0 * 16.0;
+        this.scaleX = screenSize.getWidth() / 7000.0 * 9.0;
+        this.scaleY = screenSize.getHeight() / 7000.0 * 16.0;
     }
 
     @Override
     public void open(final int width, final int height) {
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.startWidth = width;
         this.startHeight = height;
 
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.window.setSize(width, height);
+        this.window.setBounds(
+            (int) (screenSize.getWidth() - width*this.scaleX)/2,
+            (int) (screenSize.getHeight() - height*this.scaleY)/2,
+            width, 
+            height
+        );
         this.window.add(this);
         this.window.setVisible(true);
         this.window.getContentPane().setPreferredSize(new Dimension((int) (width*this.scaleX), (int) (height*this.scaleY)));
@@ -69,8 +75,7 @@ public class RendererImpl extends JPanel implements Renderer {
     }
 
     @Override
-    public void draw(final GameObject player) {
-        pl = player;
+    public void draw(final List<GameObject> gameObjects) {
         this.repaint();
     }
 
@@ -83,7 +88,16 @@ public class RendererImpl extends JPanel implements Renderer {
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, (int) (this.window.getWidth()*this.scaleX), (int) (this.window.getHeight()*this.scaleY));
         g2.setColor(Color.WHITE);
-        g2.fillRect((int) (pl.getPosition().x()*this.scaleX), (int) (pl.getPosition().y()*this.scaleX), (int) (20*this.scaleX), (int) (20*this.scaleY));
+
+        for (final GameObject go : this.game.getCurrentRoom().getGameObjects()) {
+            g2.fillRect(
+                (int) go.getPosition().x(),
+                (int) go.getPosition().y(),
+                (int) Room.TILE_SIZE, 
+                (int) Room.TILE_SIZE
+            );
+        }
+
         g2.dispose();
     }
 }

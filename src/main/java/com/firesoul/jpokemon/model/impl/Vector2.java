@@ -1,4 +1,4 @@
-package com.firesoul.jmario.model.impl;
+package com.firesoul.jpokemon.model.impl;
 
 public record Vector2(double x, double y) {
     

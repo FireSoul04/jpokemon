@@ -1,6 +1,6 @@
-package com.firesoul.jmario.model.api;
+package com.firesoul.jpokemon.model.api;
 
-import com.firesoul.jmario.model.impl.Vector2;
+import com.firesoul.jpokemon.model.impl.Vector2;
 
 public interface GameObject {
     
@@ -18,5 +18,5 @@ public interface GameObject {
     /**
      * @return current speed of this game object
      */
-    Vector2 getSpeed();
+    double getSpeed();
 }

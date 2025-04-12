@@ -1,4 +1,4 @@
-package com.firesoul.jmario.view.api;
+package com.firesoul.jpokemon.view.api;
 
 import java.awt.Image;
 

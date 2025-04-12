@@ -1,4 +1,4 @@
-package com.firesoul.jmario.model.api;
+package com.firesoul.jpokemon.model.api;
 
 public interface Event {
 

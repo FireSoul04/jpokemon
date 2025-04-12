@@ -1,4 +1,4 @@
-package com.firesoul.jmario.view.impl;
+package com.firesoul.jpokemon.view.impl;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.firesoul.jmario.model.api.Event;
-import com.firesoul.jmario.model.api.EventHandler;
+import com.firesoul.jpokemon.model.api.Event;
+import com.firesoul.jpokemon.model.api.EventHandler;
 
 public class KeyHandler implements EventHandler {
     
@@ -35,6 +35,8 @@ public class KeyHandler implements EventHandler {
         this.addEvent("MoveDown", this::moveDown);
         this.addEvent("MoveLeft", this::moveLeft);
         this.addEvent("MoveRight", this::moveRight);
+
+        this.addEvent("SpeedUp", this::speedUp);
     }
     
     private boolean moveUp() {
@@ -51,6 +53,10 @@ public class KeyHandler implements EventHandler {
     
     private boolean moveRight() {
         return this.isKeyPressed(KeyEvent.VK_D) || this.isKeyPressed(KeyEvent.VK_RIGHT);
+    }
+
+    private boolean speedUp() {
+        return this.isKeyPressed(KeyEvent.VK_SPACE);
     }
 
     @Override

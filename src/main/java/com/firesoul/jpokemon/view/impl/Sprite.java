@@ -1,8 +1,8 @@
-package com.firesoul.jmario.view.impl;
+package com.firesoul.jpokemon.view.impl;
 
 import java.awt.Image;
 
-import com.firesoul.jmario.view.api.Drawable;
+import com.firesoul.jpokemon.view.api.Drawable;
 
 public class Sprite implements Drawable {
 

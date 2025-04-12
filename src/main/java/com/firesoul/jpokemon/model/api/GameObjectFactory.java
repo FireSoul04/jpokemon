@@ -1,8 +1,8 @@
-package com.firesoul.jmario.model.api;
+package com.firesoul.jpokemon.model.api;
 
 import java.util.function.Function;
 
-import com.firesoul.jmario.model.impl.Vector2;
+import com.firesoul.jpokemon.model.impl.Vector2;
 
 public interface GameObjectFactory {
 
@@ -13,7 +13,7 @@ public interface GameObjectFactory {
      * @param movingCriteria that represent how the entity moves, giving delta time as parameter and returning the next position where to go
      * @return a game object that can move based on movingCriteria
      */
-    GameObject movingGameObject(Vector2 position, Vector2 speed, Function<Double, Vector2> movingCriteria);
+    GameObject movingGameObject(Vector2 position, double speed, Function<Double, Vector2> movingCriteria);
 
     /**
      * Game object with static movement and no speed.
@@ -28,7 +28,7 @@ public interface GameObjectFactory {
      * @param speed
      * @return a game object that can move
      */
-    GameObject dynamicGameObject(Vector2 position, Vector2 speed);
+    GameObject dynamicGameObject(Vector2 position, double speed);
 
     /**
      * Game object representing the player.
@@ -37,5 +37,5 @@ public interface GameObjectFactory {
      * @param keys
      * @return the player
      */
-    GameObject player(Vector2 position, Vector2 speed, EventHandler keys);
+    GameObject player(Vector2 position, double speed, EventHandler keys);
 }
