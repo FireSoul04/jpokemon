@@ -2,6 +2,7 @@ package com.firesoul.jpokemon.model.impl;
 
 import java.util.function.Function;
 
+import com.firesoul.jpokemon.model.api.Collider;
 import com.firesoul.jpokemon.model.api.EventHandler;
 import com.firesoul.jpokemon.model.api.GameObject;
 import com.firesoul.jpokemon.model.api.GameObjectFactory;
@@ -11,10 +12,12 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
 
     private abstract class BaseGameObject implements GameObject {
 
+        private final Collider collider;
         private Vector2 position;
         private double speed;
 
         public BaseGameObject(final Vector2 position, final double speed) {
+            this.collider = new BoxCollider(this, Room.TILE_SIZE, Room.TILE_SIZE);
             this.position = position;
             this.speed = speed;
         }
@@ -34,6 +37,11 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
         @Override
         public double getSpeed() {
             return this.speed;
+        }
+
+        @Override
+        public Collider getCollider() {
+            return this.collider;
         }
 
         protected void setPosition(final Vector2 position) {

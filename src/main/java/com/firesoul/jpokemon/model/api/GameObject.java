@@ -19,4 +19,9 @@ public interface GameObject {
      * @return current speed of this game object
      */
     double getSpeed();
+
+    /**
+     * @return collider attached to this game object
+     */
+    Collider getCollider();
 }
