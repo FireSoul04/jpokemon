@@ -54,11 +54,17 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
 
     private Vector2 getPlayerInput(final EventHandler keys, final Vector2 speed, final double dt) {
         Vector2 velocity = Vector2.zero();
+        if (keys.getEvent("MoveUp")) {
+            velocity = new Vector2(0.0, velocity.subtract(speed).multiply(dt).y());
+        }
+        if (keys.getEvent("MoveDown")) {
+            velocity = new Vector2(0.0, velocity.add(speed).multiply(dt).y());
+        }
         if (keys.getEvent("MoveLeft")) {
-            velocity = velocity.subtract(speed).multiply(dt);
+            velocity = new Vector2(velocity.subtract(speed).multiply(dt).x(), 0.0);
         }
         if (keys.getEvent("MoveRight")) {
-            velocity = velocity.add(speed).multiply(dt);
+            velocity = new Vector2(velocity.add(speed).multiply(dt).x(), 0.0);
         }
         return velocity;
     }
