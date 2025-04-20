@@ -17,8 +17,8 @@ public class BoxCollider implements Collider {
 
     @Override
     public boolean isCollidingWith(final Collider c) {
-        final Vector2 d1 = this.getDimensions();
-        final Vector2 d2 = c.getDimensions();
+        final Vector2 d1 = this.getSize();
+        final Vector2 d2 = c.getSize();
         final Vector2 c1 = this.getPosition();
         final Vector2 c2 = c.getPosition();
         return c1.x() < c2.x() + d2.x()
@@ -33,7 +33,7 @@ public class BoxCollider implements Collider {
     }
 
     @Override
-    public Vector2 getDimensions() {
+    public Vector2 getSize() {
         return new Vector2(this.width, this.height);
     }
 

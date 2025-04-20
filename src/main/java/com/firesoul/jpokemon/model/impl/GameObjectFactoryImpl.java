@@ -95,6 +95,7 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
         
                     return this.oldVelocity;
                 }
+                
                 Vector2 velocity = Vector2.zero();
                 if (keys.getEvent("MoveUp")) {
                     velocity = new Vector2(0.0, velocity.add(-1.0).y()).multiply(dt);
