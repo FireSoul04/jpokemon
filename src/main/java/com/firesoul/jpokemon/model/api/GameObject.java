@@ -1,5 +1,6 @@
 package com.firesoul.jpokemon.model.api;
 
+import com.firesoul.jpokemon.model.api.Room.Grid;
 import com.firesoul.jpokemon.model.impl.Vector2;
 
 public interface GameObject {
@@ -16,6 +17,11 @@ public interface GameObject {
     Vector2 getPosition();
 
     /**
+     * @return grid where this game object is inside currently
+     */
+    Grid getGridPosition();
+
+    /**
      * @return current speed of this game object
      */
     double getSpeed();
@@ -24,6 +30,4 @@ public interface GameObject {
      * @return collider attached to this game object
      */
     Collider getCollider();
-
-    void pushBack(double dt, Vector2 direction);
 }

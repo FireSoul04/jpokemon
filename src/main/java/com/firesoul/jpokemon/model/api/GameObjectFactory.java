@@ -1,6 +1,6 @@
 package com.firesoul.jpokemon.model.api;
 
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.firesoul.jpokemon.model.impl.Vector2;
 
@@ -13,7 +13,7 @@ public interface GameObjectFactory {
      * @param movingCriteria that represent how the entity moves, giving delta time as parameter and returning the next position where to go
      * @return a game object that can move based on movingCriteria
      */
-    GameObject movingGameObject(Vector2 position, double speed, Function<Double, Vector2> movingCriteria);
+    GameObject movingGameObject(Vector2 position, double speed, Supplier<Vector2> movingCriteria);
 
     /**
      * Game object with static movement and no speed.

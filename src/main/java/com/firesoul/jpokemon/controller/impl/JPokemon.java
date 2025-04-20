@@ -27,9 +27,10 @@ public class JPokemon implements Game, Runnable {
     private GameState state = GameState.MENU;
 
     public JPokemon() {
-        final GameObjectFactory gf = new GameObjectFactoryImpl();
-        final GameObject player = gf.player(Vector2.one().multiply(20.0), 1.0, this.keyHandler);
+        GameObject player = null;
         this.room = new RoomImpl(player);
+        final GameObjectFactory gf = new GameObjectFactoryImpl(this.room);
+        player = gf.player(Vector2.one().multiply(20.0), 1.0, this.keyHandler);
         this.room.addGameObject(player);
         this.room.addGameObject(gf.staticGameObject(Vector2.one().multiply(80.0)));
         
