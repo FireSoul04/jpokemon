@@ -24,4 +24,6 @@ public interface GameObject {
      * @return collider attached to this game object
      */
     Collider getCollider();
+
+    void pushBack(double dt, Vector2 direction);
 }

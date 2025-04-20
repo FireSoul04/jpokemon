@@ -27,5 +27,5 @@ tasks.withType<Test> {
 }
 
 application {
-	mainClass = "com.firesoul.pacman.Start"
+	mainClass = "com.firesoul.jpokemon.Start"
 }

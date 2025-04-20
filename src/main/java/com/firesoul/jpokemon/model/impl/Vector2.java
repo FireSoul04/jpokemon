@@ -70,4 +70,20 @@ public record Vector2(double x, double y) {
     public Vector2 subtract(final Vector2 v) {
         return this.add(v.invert());
     }
+
+    public double dot(final Vector2 v) {
+        return this.x*v.x + this.y*v.y;
+    }
+
+    public double norm() {
+        return Math.sqrt(this.dot(this));
+    }
+
+    public Vector2 normalize() {
+        if (this.norm() != 0.0) {
+            return this.divide(this.norm());
+        } else {
+            return Vector2.zero();
+        }
+    }
 }

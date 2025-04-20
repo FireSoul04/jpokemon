@@ -26,7 +26,7 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
 
         @Override
         public void update(final double dt) {
-            this.position = this.position.add(this.movingCriteria(dt).multiply(this.getSpeed()));
+            this.position = this.position.add(this.movingCriteria(dt).multiply(this.speed));
         }
 
         @Override
@@ -42,6 +42,11 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
         @Override
         public Collider getCollider() {
             return this.collider;
+        }
+
+        @Override
+        public void pushBack(final double dt, final Vector2 direction) {
+            
         }
 
         protected void setPosition(final Vector2 position) {
@@ -90,9 +95,9 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
                 } else {
                     this.setSpeed(this.startSpeed);
                 }
-                if ((int) (this.getPosition().x() % Room.TILE_SIZE) != 0 ||
-                    (int) (this.getPosition().y() % Room.TILE_SIZE) != 0) {
-        
+                if (this.getPosition().x() % Room.TILE_SIZE > 0.5 ||
+                    this.getPosition().y() % Room.TILE_SIZE > 0.5) {
+
                     return this.oldVelocity;
                 }
                 
@@ -111,6 +116,21 @@ public class GameObjectFactoryImpl implements GameObjectFactory {
                 }
                 this.oldVelocity = velocity;
                 return velocity;
+            }
+
+            @Override
+            public void pushBack(final double dt, final Vector2 direction) {
+                Vector2 finalDirection = Vector2.zero();
+                if (direction.y() > 1.0) {
+                    finalDirection = new Vector2(0.0, -1.0);
+                } else if (direction.y() < -1.0) {
+                    finalDirection = new Vector2(0.0, 1.0);
+                } else if (direction.x() > 1.0) {
+                    finalDirection = new Vector2(-1.0, 0.0);
+                } else if (direction.x() < -1.0) {
+                    finalDirection = new Vector2(1.0, 0.0);
+                }
+                this.oldVelocity = finalDirection.multiply(dt);
             }
         };
     }
